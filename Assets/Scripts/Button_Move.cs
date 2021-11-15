@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Button_Move : MonoBehaviour
@@ -15,7 +13,7 @@ public class Button_Move : MonoBehaviour
     {
         up = true;
         firstpos = transform.position;
-        lastpos = transform.position - new Vector3(0,offset,0);
+        lastpos = transform.position - new Vector3(0, offset, 0);
     }
 
     // Update is called once per frame
@@ -23,7 +21,7 @@ public class Button_Move : MonoBehaviour
     {
         if (transform.position.y <= -.3f && up)
         {
-            
+
             Instantiate(menu, GameObject.FindGameObjectWithTag("UI").transform);
             up = false;
             Time.timeScale = 0;
@@ -36,7 +34,7 @@ public class Button_Move : MonoBehaviour
         else
         {
             transform.position = Vector3.Lerp(lastpos, transform.position, smoothing * Time.deltaTime);
-        }      
+        }
     }
 
     private void OnTriggerEnter(Collider other)

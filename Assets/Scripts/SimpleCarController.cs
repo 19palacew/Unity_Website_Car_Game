@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +16,7 @@ public class SimpleCarController : MonoBehaviour
     public float maxMotorTorque;
     public float maxSteeringAngle;
     public float maxSpeed;
+    public float eBrakeSpeed;
     private Rigidbody rb;
 
     private void Start()
@@ -49,9 +49,20 @@ public class SimpleCarController : MonoBehaviour
         float motor = maxMotorTorque * Input.GetAxis("Vertical");
         float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
 
-        if (Input.GetAxis("Vertical") !=1 && rb.velocity.magnitude>1)
+        /*
+        if (Input.GetAxis("Vertical") == -1 && rb.velocity.magnitude>1)
         {
             motor = maxMotorTorque*-1;
+        }
+        if (Input.GetAxis("Vertical") == 1 && rb.velocity.magnitude < 1)
+        {
+            motor = maxMotorTorque * 1;
+        }
+        */
+
+        if (Input.GetAxis("Vertical") == 0)
+        {
+            rb.velocity = Vector3.Lerp(rb.velocity, new Vector3(), .01f);
         }
 
         foreach (AxleInfo axleInfo in axleInfos)
@@ -69,6 +80,12 @@ public class SimpleCarController : MonoBehaviour
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
-        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x,-maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.y, -maxSpeed, maxSpeed), Mathf.Clamp(rb.velocity.z, -maxSpeed, maxSpeed));
+        //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, Mathf.Clamp(transform.rotation.eulerAngles.z, -30, 30)));
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0)), 10);
+        if (Input.GetKey("space"))
+        {
+            rb.AddTorque(Input.GetAxis("Horizontal") * eBrakeSpeed * Time.deltaTime * new Vector3(0, 1, 0));
+        }
     }
 }

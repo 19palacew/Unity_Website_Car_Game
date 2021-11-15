@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +16,7 @@ public class Menu_Buttons : MonoBehaviour
         foreach (GameObject panel in panels)
         {
             Destroy(panel);
-        }   
+        }
     }
 
     private void GoToLink()

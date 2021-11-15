@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +21,7 @@ public class CarPhysics : MonoBehaviour
         Vector3 pasPos = curPos;
         curPos = transform.position;
         Vector3 meanPos = curPos - pasPos;
-        float speed = (meanPos.magnitude/circ)*360;
+        float speed = (meanPos.magnitude / circ) * 360;
 
         foreach (CarAxleInfo axleInfo in axleInfos)
         {
@@ -41,7 +40,7 @@ public class CarPhysics : MonoBehaviour
                 axleInfo.leftWheel.motorTorque = motor;
                 axleInfo.rightWheel.motorTorque = motor;
                 axleInfo.leftWheelMesh.transform.Rotate(new Vector3(speed, 0, 0));
-                axleInfo.rightWheelMesh.transform.Rotate(new Vector3(speed, 0 ,0));
+                axleInfo.rightWheelMesh.transform.Rotate(new Vector3(speed, 0, 0));
             }
         }
     }
